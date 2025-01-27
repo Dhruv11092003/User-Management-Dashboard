@@ -58,6 +58,15 @@
     overflow-y: scroll;
 }
 
+.add-user-btn{
+    border: 1px solid white;
+    margin-bottom: 10px;
+    color:white;
+    background-color: cornflowerblue;
+    height: 30px;
+    width: 80px;
+}
+
 @media screen and (min-width: 768px) {
     .main-home-container {
         display: flex;

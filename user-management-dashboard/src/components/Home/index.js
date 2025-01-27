@@ -21,6 +21,11 @@ class Home extends Component {
     return data ? JSON.parse(data) : null;
   };
 
+  updateUserList = (updatedData) => {
+    this.setState({ userDataArray: updatedData });
+    this.setLocalStorage("userDataArray", updatedData);
+  };
+
   componentDidMount = async () => {
     try {
       // Check local storage for user data
@@ -70,12 +75,12 @@ class Home extends Component {
   };
 
   render() {
-    const { userDataArray } = this.state; // Access local user data array
+    const { userDataArray ,editingUser} = this.state; // Access local user data array
 
     return (
       <div className="home-container">
         <div className="main-home-container">
-        <Popup
+          <Popup
             trigger={<button className="add-user-btn">Add User</button>}
             modal
             nested
@@ -83,12 +88,20 @@ class Home extends Component {
           >
             {(close) => (
               <div>
-                <UserForm addUser={this.addUserData} close={close} />
+                <UserForm
+                  addUser={this.addUserData}
+                  close={close}
+
+
+                />
               </div>
             )}
           </Popup>
           <div className="users-container">
-          <UserList userDataArray={userDataArray} />
+            <UserList
+              userDataArray={userDataArray}
+              updateUserList={this.updateUserList}
+            />
           </div>
         </div>
       </div>

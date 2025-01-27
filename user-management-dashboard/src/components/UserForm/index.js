@@ -1,9 +1,9 @@
-import { useState } from "react";
-import "./index.css"; // Make sure to import the CSS file for styling
+import { useState, useEffect } from "react";
+import "./index.css"; // Import the CSS file for styling
 import ClipLoader from "react-spinners/ClipLoader";
 
 const UserForm = (props) => {
-  const { close, addUser } = props;
+  const { close, addUser, user, updateUser } = props;
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({
     name: "",
@@ -24,9 +24,27 @@ const UserForm = (props) => {
 
   const [errors, setErrors] = useState({});
 
-  const addUserData = (payload) => {
-    addUser(payload);
-  };
+  useEffect(() => {
+    if (user) {
+      // Flatten address and company fields when editing
+      setUserData({
+        name: user.name || "",
+        username: user.username || "",
+        email: user.email || "",
+        street: user.address?.street || "",
+        suite: user.address?.suite || "",
+        city: user.address?.city || "",
+        zipcode: user.address?.zipcode || "",
+        lat: user.address?.geo?.lat || "",
+        lng: user.address?.geo?.lng || "",
+        phone: user.phone || "",
+        website: user.website || "",
+        companyName: user.company?.name || "",
+        catchPhrase: user.company?.catchPhrase || "",
+        bs: user.company?.bs || "",
+      });
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -96,15 +114,21 @@ const UserForm = (props) => {
           },
         };
 
-        console.log("Form submitted successfully:", payload);
+        if (user) {
+          // If editing, update user
+          updateUser(user.id, payload);
+        } else {
+          // If adding, add user
+          addUser(payload);
+        }
+
         setLoading(false);
-        addUserData(payload);
+        close(); // Close modal on success
       } else {
-        console.log("Form contains errors");
         setLoading(false);
       }
     } catch (e) {
-      console.log(e.message);
+      console.error("Error:", e.message);
       setLoading(false);
     }
   };
@@ -115,7 +139,9 @@ const UserForm = (props) => {
         &times;
       </button>
       <div className="form-container">
-        <h2 className="form-title">User Information Form</h2>
+        <h2 className="form-title">
+          {user ? "Edit User Information" : "Add New User"}
+        </h2>
         <form className="user-form" onSubmit={submitData}>
           {Object.keys(userData).map((key) => (
             <div className="form-group" key={key}>
@@ -137,12 +163,12 @@ const UserForm = (props) => {
             </div>
           ))}
           {loading ? (
-            <button className="submit-btn" type="submit">
+            <button className="submit-btn" type="submit" disabled>
               <ClipLoader color="#ffffff" />
             </button>
           ) : (
             <button className="submit-btn" type="submit">
-              Submit
+              {user ? "Update" : "Submit"}
             </button>
           )}
         </form>

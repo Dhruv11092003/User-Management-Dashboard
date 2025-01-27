@@ -1,6 +1,6 @@
 /* Styling for the user list section */
 .user-list-container {
-  background-color: #fff;
+  background-color: #ffffff81;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -84,7 +84,7 @@
 .users-tab {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
 }
