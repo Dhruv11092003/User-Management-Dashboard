@@ -76,11 +76,7 @@ const UserForm = (props) => {
       newErrors.email = "Invalid email format";
     }
 
-    // Phone number validation
-    if (userData.phone && !/^\d{10}$/.test(userData.phone)) {
-      valid = false;
-      newErrors.phone = "Phone number must be 10 digits";
-    }
+
 
     setErrors(newErrors);
     return valid;
