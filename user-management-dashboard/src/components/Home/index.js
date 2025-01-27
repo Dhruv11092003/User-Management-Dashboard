@@ -5,10 +5,13 @@ import "./index.css";
 import UserForm from "../UserForm";
 import axios from "axios";
 import UserList from "../UserList";
-
+import ClipLoader from "react-spinners/ClipLoader";
+import ErrorCard from "../ErrorComponent";
 class Home extends Component {
   state = {
     userDataArray: [],
+    error: false,
+    loading:false,
   };
 
   // functions for local storage
@@ -28,23 +31,32 @@ class Home extends Component {
 
   componentDidMount = async () => {
     try {
+      // Set loading state to true
+      this.setState({ loading: true });
+  
       // Check local storage for user data
       const localData = this.getLocalStorage("userDataArray");
       if (localData) {
-        this.setState({ userDataArray: localData }); // Load data from local storage
+        // Load data from local storage
+        this.setState({ userDataArray: localData, loading: false });
       } else {
         // Fetch data from API using axios if no local data exists
         const response = await axios.get(
           "https://jsonplaceholder.typicode.com/users"
         );
         const data = response.data;
-        this.setState({ userDataArray: data });
-        this.setLocalStorage("userDataArray", data); // Save API data to local storage
+  
+        // Update state with fetched data and save it to local storage
+        this.setState({ userDataArray: data, loading: false });
+        this.setLocalStorage("userDataArray", data);
       }
     } catch (error) {
+      // Handle error state
       console.error("Error fetching users:", error);
+      this.setState({ error: true, loading: false });
     }
   };
+  
 
   addUserData = async (payload) => {
     try {
@@ -75,38 +87,45 @@ class Home extends Component {
   };
 
   render() {
-    const { userDataArray ,editingUser} = this.state; // Access local user data array
-
+    const { userDataArray, loading, error } = this.state; // Access local user data array
+  
     return (
       <div className="home-container">
-        <div className="main-home-container">
-          <Popup
-            trigger={<button className="add-user-btn">Add User</button>}
-            modal
-            nested
-            className="popup-content"
-          >
-            {(close) => (
-              <div>
-                <UserForm
-                  addUser={this.addUserData}
-                  close={close}
-
-
-                />
-              </div>
-            )}
-          </Popup>
-          <div className="users-container">
-            <UserList
-              userDataArray={userDataArray}
-              updateUserList={this.updateUserList}
-            />
+        {loading ? (
+          <div className="loading-container">
+            <ClipLoader color="#4A90E2" size={50} />
+            <p>Loading...</p>
           </div>
-        </div>
+        ) : error ? (
+          <div className="error-container">
+            <ErrorCard />
+          </div>
+        ) : (
+          <div className="main-home-container">
+            <Popup
+              trigger={<button className="add-user-btn">Add User</button>}
+              modal
+              nested
+              className="popup-content"
+            >
+              {(close) => (
+                <div>
+                  <UserForm addUser={this.addUserData} close={close} />
+                </div>
+              )}
+            </Popup>
+            <div className="users-container">
+              <UserList
+                userDataArray={userDataArray}
+                updateUserList={this.updateUserList}
+              />
+            </div>
+          </div>
+        )}
       </div>
     );
   }
+  
 }
 
 export default Home;

@@ -20,7 +20,7 @@ class UserList extends Component {
 
   // Handle delete action
   handleDelete = async (id) => {
-    const { userDataArray} = this.props;
+    const { userDataArray } = this.props;
 
     try {
       const response = await axios.delete(
@@ -52,26 +52,29 @@ class UserList extends Component {
   // Update user data
   updateUser = async (id, updatedData) => {
     const { userDataArray } = this.props;
-  
+
     try {
       // Send a PUT request to update the user in the API
       const response = await axios.put(
         `https://jsonplaceholder.typicode.com/users/${id}`,
         updatedData
       );
-  
+
       if (response.status === 200) {
         // Update the user in the local state and local storage
         const updatedUserDataArray = userDataArray.map((user) =>
           user.id === id ? { ...user, ...updatedData } : user
         );
-  
-        localStorage.setItem("userDataArray", JSON.stringify(updatedUserDataArray));
+
+        localStorage.setItem(
+          "userDataArray",
+          JSON.stringify(updatedUserDataArray)
+        );
         this.props.updateUserList(updatedUserDataArray);
-  
+
         // Close the popup
         this.closePopup();
-  
+
         alert("User updated successfully");
       }
     } catch (error) {
@@ -79,7 +82,6 @@ class UserList extends Component {
       alert("Failed to update user");
     }
   };
-  
 
   render() {
     const { userDataArray } = this.props;
@@ -121,22 +123,31 @@ class UserList extends Component {
                 activeIndex === index ? "active" : ""
               }`}
             >
+              <div>Username: {user.username}</div>
+              <div>Name: {user.name}</div>
+              <div>Email: {user.email}</div>
               <div>Street: {user.address.street}</div>
               <div>Suite: {user.address.suite}</div>
               <div>City: {user.address.city}</div>
               <div>Zipcode: {user.address.zipcode}</div>
+              <div>Latitude: {user.address.geo.lat}</div>
+              <div>Longitude: {user.address.geo.lng}</div>
               <div>Phone: {user.phone}</div>
               <div>Website: {user.website}</div>
-              <div>Company: {user.company.name}</div>
+              <div>Company Name: {user.company.name}</div>
               <div>Catch Phrase: {user.company.catchPhrase}</div>
-              <div>BS: {user.company.bs}</div>
+              <div>BS (Business Strategy): {user.company.bs}</div>
             </div>
           </div>
         ))}
 
         {/* Popup for editing user */}
         {showPopup && (
-          <Popup open={showPopup} closeOnDocumentClick onClose={this.closePopup}>
+          <Popup
+            open={showPopup}
+            closeOnDocumentClick
+            onClose={this.closePopup}
+          >
             <div className="popup-content">
               <UserForm
                 close={this.closePopup}
