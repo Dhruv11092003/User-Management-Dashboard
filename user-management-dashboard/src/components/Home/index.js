@@ -1,9 +1,14 @@
 import {Component} from 'react'
 
+import "./index.css"
 class Home extends Component{
     render(){
         return(
-            <h1>Home</h1>
+            <div className="home-container">
+            <div className="main-home-container">
+
+            </div>
+        </div>
         )
     }
 }
