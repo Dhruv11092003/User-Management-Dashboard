@@ -23,20 +23,33 @@
     justify-content: center;
     align-items: center;
     animation: fadeIn 2s ease-in-out;
+
 }
 
 .main-home-container {
     height: 80vh;
     width: 90vw;
     border-radius: 10px;
-    overflow: hidden;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     animation: scaleIn 1.5s ease-in-out;
+    
 }
 
+.popup-content {
+    margin: auto;
+    overflow-y:scroll;
+    width: 100%;
+    max-width:600px;
+    border: none;
+    background-color: transparent;
+    margin: 10px;
+    height: auto;
+    max-height: 90%;
+  }
 
 @media screen and (min-width: 768px) {
     .main-home-container {

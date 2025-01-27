@@ -1,0 +1,161 @@
+/* Modal Container */
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 90%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    transition: transform 0.3s ease;
+    
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    
+  }
+  
+  .form-title {
+    text-align: center;
+    color: #333;
+    font-size: 22px; /* Default font size for mobile */
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  .user-form {
+    height: auto;
+    width: 100%;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Mobile first approach (column layout) */
+    gap: 15px;
+ 
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  
+  .form-label {
+    font-size: 14px;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .form-input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Close Button */
+  .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 22px;
+    color: #333;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .close-btn:hover {
+    color: #ff0000;
+  }
+  
+  /* Button styles */
+  .open-modal-btn {
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .open-modal-btn:hover {
+    background-color: #218838;
+  }
+
+  .error-message {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  
+  
+  /* Mobile-First - Above Styles Work For Mobile Devices */
+  
+  @media (min-width: 768px) {
+    .user-form {
+      flex-direction: row; /* On larger screens, change to a row layout */
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+  
+    .form-group {
+      width: 48%; /* Two columns */
+    }
+  
+    .form-title {
+      font-size: 24px; /* Larger font on larger screens */
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .modal-content {
+      max-width: 700px;
+      padding: 30px;
+    }
+  
+    .form-title {
+      font-size: 26px; /* Even larger font for desktop screens */
+    }
+  
+    .user-form {
+      gap: 20px; /* Increase gap between form fields for larger screens */
+    }
+  
+    .form-group {
+      width: 45%; /* Slightly reduce width for each field */
+    }
+  }
+  
