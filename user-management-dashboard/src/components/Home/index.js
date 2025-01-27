@@ -4,6 +4,7 @@ import "reactjs-popup/dist/index.css";
 import "./index.css";
 import UserForm from "../UserForm";
 import axios from "axios";
+import UserList from "../UserList";
 
 class Home extends Component {
   state = {
@@ -28,7 +29,9 @@ class Home extends Component {
         this.setState({ userDataArray: localData }); // Load data from local storage
       } else {
         // Fetch data from API using axios if no local data exists
-        const response = await axios.get("https://jsonplaceholder.typicode.com/users");
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/users"
+        );
         const data = response.data;
         this.setState({ userDataArray: data });
         this.setLocalStorage("userDataArray", data); // Save API data to local storage
@@ -37,7 +40,6 @@ class Home extends Component {
       console.error("Error fetching users:", error);
     }
   };
-  
 
   addUserData = async (payload) => {
     try {
@@ -73,7 +75,7 @@ class Home extends Component {
     return (
       <div className="home-container">
         <div className="main-home-container">
-          <Popup
+        <Popup
             trigger={<button className="add-user-btn">Add User</button>}
             modal
             nested
@@ -85,6 +87,9 @@ class Home extends Component {
               </div>
             )}
           </Popup>
+          <div className="users-container">
+          <UserList userDataArray={userDataArray} />
+          </div>
         </div>
       </div>
     );
